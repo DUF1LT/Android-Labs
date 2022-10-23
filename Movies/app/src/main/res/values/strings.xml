@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_new">Add new</string>
+    <string name="details">Details</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="name">Name</string>
+    <string name="nameLabel">Name: </string>
+    <string name="country">Country</string>
+    <string name="countryLabel">Country: </string>
+    <string name="genre">Genre</string>
+    <string name="genreLabel">Genre: </string>
+    <string name="pegi">18+</string>
+    <string name="pegiLabel">18+: </string>
+    <string name="addImage">Add image</string>
+    <string name="save">Save</string>
+    <string name="itemOptions">Items options:</string>
+    <string-array name="genres">
+        <item>Comedy</item>
+        <item>Action</item>
+        <item>Adventure</item>
+        <item>Romance</item>
+        <item>Cartoon</item>
+    </string-array>
+</resources>

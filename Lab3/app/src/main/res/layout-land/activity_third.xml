@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/teal_700">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="35dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/rect" />
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/rect" />
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/rect" />
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/firstStepLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:padding="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="15dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/caption_name_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@string/nameLabel"
+                    android:layout_marginEnd="10dp"/>
+                <TextView
+                    android:id="@+id/caption_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text=""/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/caption_country_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@string/countryLabel"
+                    android:layout_marginEnd="10dp"/>
+                <TextView
+                    android:id="@+id/caption_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text=""/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/caption_genre_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@string/genreLabel"
+                    android:layout_marginEnd="10dp"/>
+                <TextView
+                    android:id="@+id/caption_genre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text=""/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/caption_pegi_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="@string/pegi18Label"
+                    android:layout_marginEnd="10dp"/>
+                <TextView
+                    android:id="@+id/caption_pegi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text=""/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/yearLabel"/>
+                <NumberPicker
+                    android:id="@+id/year_picker"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/durationLabel"/>
+                <EditText
+                    android:id="@+id/duration_input"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:inputType="number"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@+id/firstStepLinearLayout"
+        app:layout_anchorGravity="bottom|center"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <Button
+            android:id="@+id/button_to_back"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:background="@color/teal_200"
+            android:text="@string/back"
+            app:layout_anchor="@+id/firstStepLinearLayout"
+            app:layout_anchorGravity="bottom|center" />
+        <Button
+            android:id="@+id/button_to_next"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:background="@color/teal_700"
+            android:text="@string/next"
+            app:layout_anchor="@+id/firstStepLinearLayout"
+            app:layout_anchorGravity="bottom|center" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

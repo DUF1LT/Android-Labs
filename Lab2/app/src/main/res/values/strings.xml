@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Расчет объема фигур</string>
+    <string name="cube_tab_name">Куб</string>
+    <string name="width_input_name">Ширина:</string>
+    <string name="site_length_input_name">Длина стороны:</string>
+    <string name="length_input_name">Длина:</string>
+    <string name="height_input_name">Высота:</string>
+    <string name="radius_input_name">Радиус:</string>
+    <string name="sphere_tab_name">Шар</string>
+    <string name="prism_tab_name">Призма</string>
+    <string name="pyramid_tab_name">Пирамида</string>
+    <string name="result_name">Результат:</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

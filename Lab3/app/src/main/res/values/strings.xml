@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Lab3</string>
+    <string name="next">Далее</string>
+    <string name="save">Сохранить</string>
+    <string name="back">Назад</string>
+    <string name="name">Имя</string>
+    <string name="nameLabel">Имя:</string>
+    <string name="country">Страна</string>
+    <string name="countryLabel">Страна:</string>
+    <string name="year">Год выхода</string>
+    <string name="datePick">Выбор даты</string>
+    <string name="yearLabel">Год выхода:</string>
+    <string name="genre">Жанр</string>
+    <string name="genreLabel">Жанр:</string>
+    <string name="pegi18">Рейтинг 18+</string>
+    <string name="pegi18Label">Рейтинг 18+:</string>
+    <string name="duration">Продолжительность</string>
+    <string name="durationLabel">Продолжительность:</string>
+    <string name="youtubeCode">Код трейлера на ютуб:</string>
+    <string name="createNew">Создать</string>
+    <string name="toList">К списку</string>
+    <string name="movies">Фильмы</string>
+    <string name="sendMovieInfo">Отправить информацию по почте</string>
+    <string name="watchTrailer">Посмотреть трейлер на ютуб</string>
+    <string name="phoneThis">По вопросам звонить по этому номеру -> </string>
+    <string name="addImage">Добавьте изображение</string>
+</resources>
