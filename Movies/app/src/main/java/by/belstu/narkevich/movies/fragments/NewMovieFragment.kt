@@ -1,4 +1,4 @@
-package by.belstu.narkevich.movies
+package by.belstu.narkevich.movies.fragments
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,35 +7,50 @@ import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
 import android.provider.MediaStore
-import android.view.MenuItem
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import by.belstu.narkevich.movies.databinding.ActivityNewMovieBinding
+import androidx.fragment.app.Fragment
+import by.belstu.narkevich.movies.R
+import by.belstu.narkevich.movies.databinding.FragmentNewMovieBinding
 import by.belstu.narkevich.movies.helpers.*
 import by.belstu.narkevich.movies.models.Movie
 import java.io.IOException
 
-
-class NewMovieActivity : AppCompatActivity() {
-    private lateinit var _binding: ActivityNewMovieBinding
+class NewMovieFragment : Fragment() {
+    private lateinit var _binding : FragmentNewMovieBinding
 
     private var selectedImageBitmap: Bitmap? = null;
     private var selectedImageUri: Uri? = null;
     private val SELECT_PICTURE = 200
 
+    var onMovieCreated: (() -> Unit)? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentNewMovieBinding.inflate(inflater, container, false)
+
+        return _binding.root
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        _binding = ActivityNewMovieBinding.inflate(layoutInflater)
-        setContentView(_binding.root)
-        AppBarService.createAppBar(this, _binding.toolbarLayout.toolbar, "New movie")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val compatActivity = activity as AppCompatActivity
+        compatActivity.supportActionBar?.title = getString(R.string.newMovie)
 
         val categoryAutoCompleteTextView = _binding.genresAutoCompleteTextView
         val categories = resources.getStringArray(R.array.genres)
 
-        val categoriesArrayAdapter = ArrayAdapter(this, R.layout.dropdown_item, categories)
+        val categoriesArrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, categories)
         categoryAutoCompleteTextView.setAdapter(categoriesArrayAdapter)
 
         _binding.photo.setOnClickListener {
@@ -49,34 +64,34 @@ class NewMovieActivity : AppCompatActivity() {
         }
 
         _binding.buttonToSave.setOnClickListener {
-            val newMovie: Movie = Movie()
+            val newMovie = Movie()
             newMovie.Name = _binding.movieNameInput.text.toString()
             newMovie.Country = _binding.movieCountryInput.text.toString()
             newMovie.Genre = _binding.genresAutoCompleteTextView.text.toString()
             newMovie.Pegi18 = _binding.pegiCheckBox.isChecked
 
             if (selectedImageBitmap != null) {
-                val imageName: String = FileService.getFileName(this, selectedImageUri)
-                newMovie.Image = ImageService.saveImageToInternalStorageAndGetImagePath(this, selectedImageBitmap!!, imageName)
+                val imageName: String = FileService.getFileName(requireContext(), selectedImageUri)
+                newMovie.Image = ImageService.saveImageToInternalStorageAndGetImagePath(requireContext(), selectedImageBitmap!!, imageName)
             }
 
-            MovieService.addMovie(this, newMovie)
+            MovieService.addMovie(requireContext(), newMovie)
 
-            Toast.makeText(applicationContext, "Movie was created successfully", Toast.LENGTH_LONG)
+            Toast.makeText(requireContext().applicationContext, "Movie was created successfully", Toast.LENGTH_LONG)
                 .show()
 
-            IntentService.moveToMainActivity(this)
+            onMovieCreated?.invoke()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
+        if (resultCode == AppCompatActivity.RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 selectedImageUri = data?.data
                 try {
                     selectedImageBitmap =
-                        MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImageUri)
+                        MediaStore.Images.Media.getBitmap(requireContext().contentResolver, selectedImageUri)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }

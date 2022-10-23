@@ -7,15 +7,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import by.belstu.narkevich.movies.models.Movie
 import by.belstu.narkevich.movies.MainActivity
-import by.belstu.narkevich.movies.NewMovieActivity
 
 class IntentService {
     companion object Static {
-        fun moveToAddNewActivity(context: Context) {
-            val createActivity= Intent(context, NewMovieActivity::class.java)
-            context.startActivity(createActivity)
-        }
-
         fun moveToMainActivity(context: Context) {
             val mainActivity= Intent(context, MainActivity::class.java)
             context.startActivity(mainActivity)

@@ -6,17 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include
-        android:id="@+id/toolbar_layout"
-        layout="@layout/app_bar" />
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/newMovieLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:padding="15dp"
-        android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -94,17 +92,18 @@
                 android:layout_gravity="center"
                 android:background="@color/gray" />
         </LinearLayout>
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/button_to_save"
-        style="@style/Theme.Movies"
-        android:textColor="@color/white"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:text="@string/save"
-        app:layout_anchor="@id/newMovieLinearLayout"
-        android:layout_marginBottom="15dp"
-        app:layout_anchorGravity="bottom|center" />
+        <Button
+            android:id="@+id/button_to_save"
+            style="@style/Theme.Movies"
+            android:textColor="@color/white"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="@string/save"
+            app:layout_anchor="@id/newMovieLinearLayout"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+    </ScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

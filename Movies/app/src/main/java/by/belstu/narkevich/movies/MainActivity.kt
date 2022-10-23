@@ -1,44 +1,75 @@
 package by.belstu.narkevich.movies
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.RequiresApi
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import by.belstu.narkevich.movies.adapters.MovieAdapter
+import androidx.appcompat.app.AppCompatActivity
 import by.belstu.narkevich.movies.databinding.ActivityMainBinding
+import by.belstu.narkevich.movies.fragments.EditMovieFragment
+import by.belstu.narkevich.movies.fragments.MovieDetailsFragment
+import by.belstu.narkevich.movies.fragments.MovieListFragment
+import by.belstu.narkevich.movies.fragments.NewMovieFragment
 import by.belstu.narkevich.movies.helpers.AppBarService
-import by.belstu.narkevich.movies.helpers.IntentService
-import by.belstu.narkevich.movies.helpers.MovieService
+import by.belstu.narkevich.movies.helpers.FragmentManagerService
 
 class MainActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityMainBinding
-    private lateinit var list: RecyclerView
-    private lateinit var adapter: MovieAdapter
 
+    private lateinit var _movieListFragment : MovieListFragment
+    private lateinit var _movieDetailsFragment : MovieDetailsFragment
+    private lateinit var _newMovieFragment : NewMovieFragment
+    private lateinit var _editMovieFragment : EditMovieFragment
+
+    var infoLayoutId: Int = R.id.frameLayout;
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(_binding.root)
         AppBarService.createAppBar(this, _binding.toolbarLayout.toolbar)
 
-        val movies = MovieService.loadMoviesFromFile(this)
-
-        adapter = MovieAdapter(this, movies)
-        adapter.onItemClick = {
-            IntentService.moveToActivityWithMovie(this, it, MovieActivity::class.java)
+        if(_binding.secondFrameLayout != null) {
+            infoLayoutId = R.id.secondFrameLayout
         }
 
-        list = _binding.list
-        list.layoutManager = LinearLayoutManager(this)
-        list.adapter = adapter
+        _movieListFragment = MovieListFragment()
+        FragmentManagerService.openMovieFragment(supportFragmentManager, R.id.frameLayout, _movieListFragment)
 
-        registerForContextMenu(list);
+        supportActionBar?.title = getString(R.string.app_name)
+
+        _movieListFragment.onMovieClick = {
+            _movieDetailsFragment = MovieDetailsFragment(it.Id)
+            FragmentManagerService.openMovieFragment(supportFragmentManager, infoLayoutId, _movieDetailsFragment, true)
+        }
+
+        _movieListFragment.onMovieDetails = {
+            _movieDetailsFragment = MovieDetailsFragment(it.Id)
+            FragmentManagerService.openMovieFragment(supportFragmentManager, infoLayoutId, _movieDetailsFragment, true)
+        }
+
+        _movieListFragment.onMovieEdit = {
+            _editMovieFragment = EditMovieFragment(it.Id)
+            _editMovieFragment.onMovieEdited = {
+                FragmentManagerService.openMovieFragmentWithRemove(supportFragmentManager, R.id.frameLayout, _movieListFragment, true)
+            }
+            FragmentManagerService.openMovieFragment(supportFragmentManager, infoLayoutId, _editMovieFragment, true)
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        supportActionBar?.title = getString(R.string.app_name)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        supportActionBar?.title = getString(R.string.app_name)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -49,38 +80,20 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.add_item -> {
-                IntentService.moveToAddNewActivity(this)
+                _newMovieFragment = NewMovieFragment()
+                _newMovieFragment.onMovieCreated = {
+                    FragmentManagerService.openMovieFragmentWithRemove(supportFragmentManager, R.id.frameLayout, _movieListFragment, true)
+                }
+
+                FragmentManagerService.openMovieFragment(supportFragmentManager, infoLayoutId, _newMovieFragment, true)
+                return true
+            }
+            android.R.id.home -> {
+                FragmentManagerService.openMovieFragment(supportFragmentManager, infoLayoutId, _movieListFragment, true)
+
                 return true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.item_delete -> {
-                    AlertDialog.Builder(this)
-                        .setTitle("Warning")
-                        .setMessage("Are you sure you want to delete this item?")
-                        .setPositiveButton("Delete") { dialog, id -> adapter.removeItem(this, item.groupId) }
-                        .setNegativeButton("Cancel") { dialog, id -> }
-                        .create()
-                        .show()
-
-                return true
-            }
-            R.id.item_details -> {
-                adapter.detailsItem(this, item.groupId)
-
-                return true
-            }
-            R.id.item_edit -> {
-                adapter.editItem(this, item.groupId)
-
-                return true
-            }
-            else ->  super.onContextItemSelected(item)
         }
     }
 }

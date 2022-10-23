@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Movies</string>
+    <string name="movie">Movie</string>
+    <string name="editMovie">Edit movie</string>
+    <string name="newMovie">New movie</string>
     <string name="action_settings">Settings</string>
     <string name="add_new">Add new</string>
     <string name="details">Details</string>

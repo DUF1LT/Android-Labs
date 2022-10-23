@@ -5,22 +5,16 @@ import android.os.Build
 import android.view.ContextMenu
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 
 import androidx.recyclerview.widget.RecyclerView;
-import by.belstu.narkevich.movies.EditMovieActivity
-import by.belstu.narkevich.movies.MovieActivity
 import by.belstu.narkevich.movies.helpers.ImageService
 import by.belstu.narkevich.movies.models.Movie
 import by.belstu.narkevich.movies.R
-import by.belstu.narkevich.movies.helpers.FileService
-import by.belstu.narkevich.movies.helpers.IntentService
 import by.belstu.narkevich.movies.helpers.MovieService
 
 
@@ -82,25 +76,7 @@ class MovieAdapter internal constructor(context: Context?, movies: ArrayList<Mov
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun clickItem(context: Context, position: Int) {
-        val movie = movies[position]
-
-        IntentService.moveToActivityWithMovie(context, movie, MovieActivity::class.java)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun editItem(context: Context, position: Int) {
-        val movie = movies[position]
-
-        IntentService.moveToActivityWithMovie(context, movie, EditMovieActivity::class.java)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun detailsItem(context: Context, position: Int) {
-        val movie = movies[position]
-
-        IntentService.moveToActivityWithMovie(context, movie, MovieActivity::class.java)
-    }
+    fun getItem(position: Int) = movies[position]
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun removeItem(context: Context, position: Int) {
