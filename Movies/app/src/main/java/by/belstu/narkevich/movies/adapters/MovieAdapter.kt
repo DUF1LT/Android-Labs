@@ -83,7 +83,7 @@ class MovieAdapter internal constructor(context: Context?, movies: ArrayList<Mov
         val movie = movies[position]
         movies.removeAt(position)
 
-        MovieService.removeMovie(context, movie.Id)
+        MovieService.removeMovie(context, movie.Id!!)
         notifyDataSetChanged()
     }
 }

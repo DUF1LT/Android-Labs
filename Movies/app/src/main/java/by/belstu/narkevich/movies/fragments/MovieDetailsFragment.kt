@@ -9,13 +9,15 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import by.belstu.narkevich.movies.R
+import by.belstu.narkevich.movies.database.MovieDBHelper
 import by.belstu.narkevich.movies.databinding.FragmentMovieDetailsBinding
 import by.belstu.narkevich.movies.helpers.ImageService
 import by.belstu.narkevich.movies.helpers.MovieService
 import java.util.*
 
-class MovieDetailsFragment(movieId: UUID? = null) : Fragment() {
-    private var movieId: UUID?
+@RequiresApi(Build.VERSION_CODES.O)
+class MovieDetailsFragment(movieId: Long = 0) : Fragment() {
+    private var movieId: Long
     private var movieIdKey: String = "MovieIdKey"
 
     private lateinit var _binding : FragmentMovieDetailsBinding
@@ -28,7 +30,7 @@ class MovieDetailsFragment(movieId: UUID? = null) : Fragment() {
         super.onCreate(savedInstanceState)
 
         if(savedInstanceState != null) {
-            movieId = UUID.fromString(savedInstanceState.getString(movieIdKey))
+            movieId = savedInstanceState.getLong(movieIdKey)
         }
     }
 
@@ -46,7 +48,7 @@ class MovieDetailsFragment(movieId: UUID? = null) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movie = MovieService.getMovie(requireContext(), movieId!!)
+        val movie = MovieDBHelper(context).getMovieById(movieId)
 
         val compatActivity = activity as AppCompatActivity
         compatActivity.supportActionBar?.title = getString(R.string.movie) + " - " + movie.Name
@@ -60,6 +62,6 @@ class MovieDetailsFragment(movieId: UUID? = null) : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(movieIdKey, movieId.toString())
+        outState.putLong(movieIdKey, movieId)
     }
 }

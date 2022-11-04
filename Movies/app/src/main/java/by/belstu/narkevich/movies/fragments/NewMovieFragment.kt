@@ -16,11 +16,13 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import by.belstu.narkevich.movies.R
+import by.belstu.narkevich.movies.database.MovieDBHelper
 import by.belstu.narkevich.movies.databinding.FragmentNewMovieBinding
 import by.belstu.narkevich.movies.helpers.*
 import by.belstu.narkevich.movies.models.Movie
 import java.io.IOException
 
+@RequiresApi(Build.VERSION_CODES.O)
 class NewMovieFragment : Fragment() {
     private lateinit var _binding : FragmentNewMovieBinding
 
@@ -56,6 +58,7 @@ class NewMovieFragment : Fragment() {
         _binding.photo.setOnClickListener {
             val builder = StrictMode.VmPolicy.Builder()
             StrictMode.setVmPolicy(builder.build())
+
             val i = Intent()
             i.type = "image/*"
             i.action = Intent.ACTION_GET_CONTENT
@@ -75,7 +78,7 @@ class NewMovieFragment : Fragment() {
                 newMovie.Image = ImageService.saveImageToInternalStorageAndGetImagePath(requireContext(), selectedImageBitmap!!, imageName)
             }
 
-            MovieService.addMovie(requireContext(), newMovie)
+            MovieDBHelper(context).addMovie(newMovie)
 
             Toast.makeText(requireContext().applicationContext, "Movie was created successfully", Toast.LENGTH_LONG)
                 .show()

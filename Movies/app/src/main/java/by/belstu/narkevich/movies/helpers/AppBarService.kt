@@ -10,6 +10,7 @@ class AppBarService {
             if(title != null)
             {
                 appCompatActivity.supportActionBar?.title = title
+                appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
             }
         }
     }

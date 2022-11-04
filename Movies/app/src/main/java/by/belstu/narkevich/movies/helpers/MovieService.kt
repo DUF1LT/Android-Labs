@@ -17,7 +17,7 @@ class MovieService {
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
-        fun getMovie(context: Context, id: UUID): Movie {
+        fun getMovie(context: Context, id: Long): Movie {
             val movies = FileService.readFromFile(context, fileName)
             val movie = movies.find { m ->  m.Id == id }
 
@@ -26,7 +26,7 @@ class MovieService {
 
 
         @RequiresApi(Build.VERSION_CODES.O)
-        fun removeMovie(context: Context, id: UUID) {
+        fun removeMovie(context: Context, id: Long) {
             val movies = FileService.readFromFile(context, fileName)
             val movie = movies.find { m ->  m.Id == id }
             movies.remove(movie)

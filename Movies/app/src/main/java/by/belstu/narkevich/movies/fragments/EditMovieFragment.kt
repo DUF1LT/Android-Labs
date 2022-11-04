@@ -16,14 +16,16 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import by.belstu.narkevich.movies.R
+import by.belstu.narkevich.movies.database.MovieDBHelper
 import by.belstu.narkevich.movies.databinding.FragmentEditMovieBinding
 import by.belstu.narkevich.movies.helpers.*
 import by.belstu.narkevich.movies.models.Movie
 import java.io.IOException
 import java.util.*
 
-class EditMovieFragment(movieId: UUID? = null) : Fragment() {
-    private var movieId: UUID?
+@RequiresApi(Build.VERSION_CODES.O)
+class EditMovieFragment(movieId: Long = 0) : Fragment() {
+    private var movieId: Long
     private var movieIdKey: String = "MovieIdKey"
 
     private lateinit var _binding : FragmentEditMovieBinding
@@ -42,7 +44,7 @@ class EditMovieFragment(movieId: UUID? = null) : Fragment() {
         super.onCreate(savedInstanceState)
 
         if(savedInstanceState != null) {
-            movieId = UUID.fromString(savedInstanceState.getString(movieIdKey))
+            movieId = savedInstanceState.getLong(movieIdKey)
         }
     }
 
@@ -60,7 +62,7 @@ class EditMovieFragment(movieId: UUID? = null) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movie = MovieService.getMovie(requireContext(), movieId!!)
+        val movie = MovieDBHelper(context).getMovieById(movieId!!)
 
         val compatActivity = activity as AppCompatActivity
         compatActivity.supportActionBar?.title = getString(R.string.editMovie) + " - " + movie.Name
@@ -98,7 +100,7 @@ class EditMovieFragment(movieId: UUID? = null) : Fragment() {
                 movie.Image = ImageService.saveImageToInternalStorageAndGetImagePath(requireContext(), selectedImageBitmap!!, imageName)
             }
 
-            MovieService.editMovie(requireContext(), movie)
+            MovieDBHelper(context).updateMovie(movie)
 
             Toast.makeText(requireContext().applicationContext, "Movie was edited successfully", Toast.LENGTH_LONG)
                 .show()
@@ -127,6 +129,6 @@ class EditMovieFragment(movieId: UUID? = null) : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(movieIdKey, movieId.toString())
+        outState.putLong(movieIdKey, movieId)
     }
 }

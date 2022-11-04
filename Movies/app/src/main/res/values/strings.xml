@@ -5,11 +5,14 @@
     <string name="newMovie">New movie</string>
     <string name="action_settings">Settings</string>
     <string name="add_new">Add new</string>
+    <string name="add_new_movie">Add new movie</string>
+    <string name="swap_layout">Swap layout</string>
     <string name="details">Details</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="name">Name</string>
     <string name="nameLabel">Name: </string>
+    <string name="filter">Filter</string>
     <string name="country">Country</string>
     <string name="countryLabel">Country: </string>
     <string name="genre">Genre</string>
@@ -26,4 +29,6 @@
         <item>Romance</item>
         <item>Cartoon</item>
     </string-array>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
