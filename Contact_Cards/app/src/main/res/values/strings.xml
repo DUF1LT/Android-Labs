@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Contact Cards</string>
+    <string name="add_new">Add</string>
+    <string name="save">Save</string>
+    <string name="add_logo">Add logo</string>
+    <string name="name">Name</string>
+    <string name="address">Address</string>
+    <string name="phone">Phone</string>
+    <string name="website">Website</string>
+    <string name="details">Details</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="cardOptions">Card Options: </string>
+    <string name="callTheNumber">Call the number</string>
+    <string name="openWebsite">Open website </string>
+</resources>

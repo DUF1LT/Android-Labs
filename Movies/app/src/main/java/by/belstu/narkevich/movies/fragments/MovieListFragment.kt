@@ -85,6 +85,8 @@ class MovieListFragment(layoutManagerType: LayoutManagerType? = null) : Fragment
         registerForContextMenu(list)
     }
 
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

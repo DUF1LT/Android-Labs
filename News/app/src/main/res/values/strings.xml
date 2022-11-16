@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">News</string>
+    <string name="news_options">News Options:</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="readMore">Read more</string>
+</resources>

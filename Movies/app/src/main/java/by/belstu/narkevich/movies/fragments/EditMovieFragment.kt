@@ -19,7 +19,6 @@ import by.belstu.narkevich.movies.R
 import by.belstu.narkevich.movies.database.MovieDBHelper
 import by.belstu.narkevich.movies.databinding.FragmentEditMovieBinding
 import by.belstu.narkevich.movies.helpers.*
-import by.belstu.narkevich.movies.models.Movie
 import java.io.IOException
 import java.util.*
 
