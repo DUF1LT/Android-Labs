@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.TransitionInflater
 import by.belstu.narkevich.contact_cards.R
 import by.belstu.narkevich.contact_cards.adapters.ContactCardsAdapter
 import by.belstu.narkevich.contact_cards.databinding.FragmentListBinding
@@ -33,6 +34,9 @@ class ListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setRetainInstance(true)
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_end)
+        exitTransition = inflater.inflateTransition(R.transition.slide_end)
     }
 
     override fun onCreateView(
@@ -71,6 +75,7 @@ class ListFragment : Fragment() {
                     .setTitle("Warning")
                     .setMessage("Are you sure you want to delete this item?")
                     .setPositiveButton("Delete") { dialog, id ->
+                        _adapter.onItemDelete(item.groupId)
                         val card = _adapter.getItem(item.groupId)
                         CoroutineScope(Dispatchers.IO).launch {
                             _viewModel.delete(card)

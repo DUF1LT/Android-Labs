@@ -6,15 +6,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.StrictMode
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
+import androidx.transition.TransitionInflater
+import by.belstu.narkevich.contact_cards.R
 import by.belstu.narkevich.contact_cards.databinding.FragmentAddEditBinding
 import by.belstu.narkevich.contact_cards.helpers.FileService
 import by.belstu.narkevich.contact_cards.helpers.ImageService
@@ -38,6 +37,9 @@ class AddEditFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setRetainInstance(true)
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_fast_start)
+        exitTransition = inflater.inflateTransition(R.transition.slide_fast_start)
     }
 
     override fun onCreateView(

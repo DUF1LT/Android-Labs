@@ -3,6 +3,7 @@ package by.belstu.narkevich.contact_cards.adapters
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
@@ -33,13 +34,20 @@ class ContactCardsAdapter internal constructor(lifecycleOwner: LifecycleOwner, p
         return CardViewHolder(binding)
     }
 
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val contactCard: ContactCard = ContactCards.value!![position]
         holder.bind(contactCard)
+
+        holder.cardView.animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.card_appear)
     }
 
     override fun getItemCount() = ContactCards.value?.size ?: 0
+
+    fun onItemDelete(position: Int) {
+        notifyItemRemoved(position)
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getItem(position: Int) = ContactCards.value!![position]
